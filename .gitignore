@@ -1,0 +1,8 @@
+# Terraform
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate*
+
+# Secrets
+*.token
+*.pem
