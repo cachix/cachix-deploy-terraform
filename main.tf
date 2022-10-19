@@ -8,16 +8,16 @@ variable "agent_name" {
   description = "The name of the agent"
 }
 
+variable "agent_token" {
+  type        = string
+  description = "The agent auth token"
+  sensitive   = true
+}
+
 variable "agent_profile" {
   type        = string
   description = "The Nix profile for the agent to manage"
   default     = ""
-}
-
-variable "agent_token" {
-  type        = string
-  description = "Path to the agent token"
-  default     = "cachix-agent.token"
 }
 
 variable "cachix_host" {
@@ -30,6 +30,7 @@ variable "ssh_private_key" {
   type        = string
   description = "Content of the private key used to connect to the target_host"
   default     = ""
+  sensitive   = true
 }
 
 variable "ssh_private_key_file" {
@@ -54,7 +55,7 @@ resource "null_resource" "cachix_deploy" {
   }
 
   provisioner "file" {
-    content     = file(var.agent_token)
+    content     = "CACHIX_AGENT_TOKEN=${var.agent_token}"
     destination = "/etc/cachix-agent.token"
   }
 

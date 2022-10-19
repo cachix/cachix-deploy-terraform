@@ -59,7 +59,7 @@ module "cachix_deploy" {
   target_host     = aws_instance.machine.public_ip
   agent_name      = "cachix-terraform"
   # TODO: remove
-  agent_token     = "stagix-agent.token"
+  agent_token     = file("stagix-agent.token")
   cachix_host     = "https://stagix.org"
   ssh_private_key = tls_private_key.state_ssh_key.private_key_openssh
 }
