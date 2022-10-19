@@ -46,19 +46,15 @@ resource "null_resource" "cachix_deploy" {
     destination = "/etc/cachix-agent.token"
   }
 
+  provisioner "file" {
+    source      = "${path.module}/bootstrap-agent.sh"
+    destination = "/tmp/bootstrap-agent.sh"
+  }
+
   provisioner "remote-exec" {
     inline = [
-      "echo Installing cachix...",
-      "nix-env -iA cachix -f https://cachix.org/api/v1/install",
-      # Remove once switched to release
-      "cachix --host https://stagix.org use cachix-sandydoo --mode root-nixconf",
-
-      "echo Copying over the agent token",
-      "export $(cat /etc/cachix-agent.token)",
-
-      "echo Launching agent",
-      # "cachix deploy agent ${var.agent_name} --bootstrap"
-      "nix run github:sandydoo/cachix/feature/455 --extra-experimental-features nix-command --extra-experimental-features flakes -- --host https://stagix.org deploy agent ${var.agent_name} --bootstrap",
+      "chmod +x /tmp/bootstrap-agent.sh",
+      "/tmp/bootstrap-agent.sh ${var.agent_name}"
     ]
   }
 }
