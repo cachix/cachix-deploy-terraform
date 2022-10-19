@@ -8,6 +8,12 @@ variable "agent_name" {
   description = "The name of the agent"
 }
 
+variable "agent_profile" {
+  type        = string
+  description = "The Nix profile for the agent to manage"
+  default     = ""
+}
+
 variable "agent_token" {
   type        = string
   description = "Path to the agent token"
@@ -60,7 +66,7 @@ resource "null_resource" "cachix_deploy" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap-agent.sh",
-      "/tmp/bootstrap-agent.sh ${var.cachix_host} ${var.agent_name}"
+      "/tmp/bootstrap-agent.sh ${var.cachix_host} ${var.agent_name} ${var.agent_profile}"
     ]
   }
 }

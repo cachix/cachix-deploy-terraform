@@ -5,6 +5,7 @@ set -o pipefail
 
 host=$1
 agent_name=$2
+agent_profile=${3:-""}
 
 # Check that Nix is installed
 if ! command -v nix &> /dev/null
@@ -28,4 +29,4 @@ nix run github:sandydoo/cachix/feature/455 \
   --extra-experimental-features nix-command \
   --extra-experimental-features flakes \
   -- \
-  --host $host deploy agent $agent_name --bootstrap
+  --host $host deploy agent $agent_name $agent_profile --bootstrap
