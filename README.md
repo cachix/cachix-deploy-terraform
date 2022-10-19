@@ -1,8 +1,30 @@
-A Terraform module that launches the Cachix Deploy agent on new NixOS machines.
+A Terraform module to adopt NixOS machines into Cachix Deploy.
+
+> Cachix Deploy is a continuous deployment service for Nix profiles.
+> Learn more at https://docs.cachix.org/deploy/
+
+## Requirements 
+
+This module is provider-agnostic, but you'll need:
+
+* Nix already installed on the target host.
+* SSH access to the target host.
 
 ## Examples
 
-* [Amazon Web Services](examples/aws.tf)
+```terraform
+module "cachix_deploy" {
+  source          = "github.com/sandydoo/cachix-deploy-terraform"
+  target_host     = aws_instance.machine.public_ip
+  agent_name      = "cachix-terraform"
+  agent_token     = "cachix-agent.token"
+  ssh_private_key = tls_private_key.state_ssh_key.private_key_openssh
+}
+```
+
+Full examples for various providers:
+
+* [Amazon Web Services (AWS)](examples/aws.tf)
 
 ## Inputs
 
