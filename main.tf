@@ -14,6 +14,12 @@ variable "agent_token" {
   default     = "cachix-agent.token"
 }
 
+variable "cachix_host" {
+  type        = string
+  description = "The host for the Cachix Deploy service"
+  default     = "https://cachix.org"
+}
+
 variable "ssh_private_key" {
   type        = string
   description = "Content of the private key used to connect to the target_host"
@@ -54,7 +60,7 @@ resource "null_resource" "cachix_deploy" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap-agent.sh",
-      "/tmp/bootstrap-agent.sh ${var.agent_name}"
+      "/tmp/bootstrap-agent.sh ${var.cachix_host} ${var.agent_name}"
     ]
   }
 }

@@ -60,6 +60,7 @@ module "cachix_deploy" {
   agent_name      = "cachix-terraform"
   # TODO: remove
   agent_token     = "stagix-agent.token"
+  cachix_host     = "https://stagix.org"
   ssh_private_key = tls_private_key.state_ssh_key.private_key_openssh
 }
 

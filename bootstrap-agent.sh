@@ -3,6 +3,9 @@
 set -eux
 set -o pipefail
 
+host=$1
+agent_name=$2
+
 # Check that Nix is installed
 if ! command -v nix &> /dev/null
 then
@@ -15,7 +18,7 @@ nix-env -iA cachix -f https://cachix.org/api/v1/install
 
 # TODO: Remove once switched to release
 # Set up binary cache for development versions of cachix
-cachix --host https://stagix.org use cachix-sandydoo --mode root-nixconf
+cachix --host $host use cachix-sandydoo --mode root-nixconf
 
 export $(cat /etc/cachix-agent.token)
 
@@ -25,4 +28,4 @@ nix run github:sandydoo/cachix/feature/455 \
   --extra-experimental-features nix-command \
   --extra-experimental-features flakes \
   -- \
-  --host https://stagix.org deploy agent $1 --bootstrap
+  --host $host deploy agent $agent_name --bootstrap
