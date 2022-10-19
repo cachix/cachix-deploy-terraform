@@ -1,6 +1,6 @@
 # Terraform
 .terraform/
-.terraform.lock.hcl
+.terraform.*
 terraform.tfstate*
 
 # Secrets
