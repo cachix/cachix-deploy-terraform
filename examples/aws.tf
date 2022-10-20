@@ -60,8 +60,9 @@ module "cachix_deploy" {
   agent_name      = "cachix-terraform"
   # TODO: remove
   agent_token     = file("stagix-agent.token")
-  cachix_host     = "https://stagix.org"
   ssh_private_key = tls_private_key.state_ssh_key.private_key_openssh
+  cachix_host     = "https://stagix.org"
+  cachix_package  = "https://github.com/sandydoo/cachix/tarball/feature/455"
 }
 
 output "public_dns" {

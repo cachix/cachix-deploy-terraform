@@ -20,12 +20,6 @@ variable "agent_profile" {
   default     = ""
 }
 
-variable "cachix_host" {
-  type        = string
-  description = "The host for the Cachix Deploy service"
-  default     = "https://cachix.org"
-}
-
 variable "ssh_private_key" {
   type        = string
   description = "Content of the private key used to connect to the target_host"
@@ -37,6 +31,18 @@ variable "ssh_private_key_file" {
   type        = string
   description = "Path to the private key used to connect to the target_host"
   default     = ""
+}
+
+variable "cachix_host" {
+  type        = string
+  description = "The host for the Cachix Deploy service"
+  default     = "https://cachix.org"
+}
+
+variable "cachix_package" {
+  type        = string
+  description = "A path or URL to a tarball containing the Cachix package"
+  default     = "https://cachix.org/api/v1/install"
 }
 
 locals {
@@ -67,7 +73,7 @@ resource "null_resource" "cachix_deploy" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap-agent.sh",
-      "/tmp/bootstrap-agent.sh ${var.cachix_host} ${var.agent_name} ${var.agent_profile}"
+      "/tmp/bootstrap-agent.sh ${var.cachix_host} ${var.cachix_package} ${var.agent_name} ${var.agent_profile}"
     ]
   }
 }

@@ -4,8 +4,9 @@ set -eux
 set -o pipefail
 
 host=$1
-agent_name=$2
-agent_profile=${3:-""}
+agent_name=$3
+agent_profile=${4:-""}
+cachix_package=$2
 
 # Check that Nix is installed
 if ! command -v nix &> /dev/null
@@ -15,18 +16,36 @@ then
 fi
 
 echo Installing cachix...
-nix-env -iA cachix -f https://cachix.org/api/v1/install
 
-# TODO: Remove once switched to release
-# Set up binary cache for development versions of cachix
-cachix --host $host use cachix-sandydoo --mode root-nixconf
+nix-env --install --attr nixpkgs.jq
+
+binary_cache_name=cachix-sandydoo
+binary_cache_public_key=$(
+  curl \
+    -X "GET" \
+    "https://$host/api/v1/cache/$binary_cache_name" \
+    -H "accept: application/json;charset=utf-8"
+)
+
+{
+  nix-env \
+    --install \
+    --prebuilt-only \
+    --extra-substituters $binary_cache_name \
+    --extra-trusted_public_keys $binary_cache_public_key \
+    --attr cachix \
+    --file $cachix_package
+} || {
+  nix-env \
+    --install \
+    --prebuilt-only \
+    --extra-substituters $binary_cache_name \
+    --extra-trusted_public_keys $binary_cache_public_key \
+    --file $cachix_package
+}
 
 export $(cat /etc/cachix-agent.token)
 
 echo "Launching the Cachix Deploy agent..."
-# cachix deploy agent ${var.agent_name} --bootstrap
-nix run github:sandydoo/cachix/feature/455 \
-  --extra-experimental-features nix-command \
-  --extra-experimental-features flakes \
-  -- \
-  --host $host deploy agent $agent_name $agent_profile --bootstrap
+cachix --host $host deploy agent $agent_name $agent_profile --bootstrap
+
