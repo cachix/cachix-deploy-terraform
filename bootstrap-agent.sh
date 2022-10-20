@@ -15,7 +15,7 @@ then
 fi
 
 echo Installing cachix...
-nix-env -iA cachix -f https://cachix.org/api/v1/install
+nix-env --install --attr cachix --file https://cachix.org/api/v1/install
 
 # TODO: Remove once switched to release
 # Set up binary cache for development versions of cachix
@@ -24,7 +24,9 @@ cachix --host $host use cachix-sandydoo --mode root-nixconf
 export $(cat /etc/cachix-agent.token)
 
 echo "Launching the Cachix Deploy agent..."
-# cachix deploy agent ${var.agent_name} --bootstrap
+# cachix --host $host deploy agent $agent_name $agent_profile --bootstrap
+
+# TODO: remove once released
 nix run github:sandydoo/cachix/feature/455 \
   --extra-experimental-features nix-command \
   --extra-experimental-features flakes \
