@@ -3,9 +3,15 @@ A Terraform module to adopt NixOS machines into Cachix Deploy.
 > Cachix Deploy is a continuous deployment service for Nix profiles.
 > Learn more at https://docs.cachix.org/deploy/
 
-## Requirements 
+This module is provider-agnostic. It uses `remote-exec` to bootstrap the Cachix Deploy agent on the target host over SSH. This is considered a [last resort approach in Terraform](https://www.terraform.io/language/resources/provisioners/syntax#provisioners-are-a-last-resort), which is why we strongly recommend using our Cachix Deploy images when possible:
 
-This module is provider-agnostic, but you'll need:
+| Provider | Images | Tutorial |
+|----------|--------|----------|
+| Amazon Web Services (AWS) | https://github.com/cachix/cachix-deploy-amis/ | https://github.com/cachix/cachix-deploy-aws |
+
+# Requirements
+
+You'll need:
 
 * Nix already installed on the target host.
 * SSH access to the target host.
