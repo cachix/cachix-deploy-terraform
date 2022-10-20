@@ -7,7 +7,7 @@ This module is provider-agnostic. It uses `remote-exec` to bootstrap the Cachix 
 
 | Provider | Images | Tutorial |
 |----------|--------|----------|
-| Amazon Web Services (AWS) | https://github.com/cachix/cachix-deploy-amis/ | https://github.com/cachix/cachix-deploy-aws |
+| Amazon Web Services (AWS) | [cachix/cachix-deploy-amis](https://github.com/cachix/cachix-deploy-amis/) | [cachix/cachix-deploy-aws](https://github.com/cachix/cachix-deploy-aws/) |
 
 ## Requirements
 
