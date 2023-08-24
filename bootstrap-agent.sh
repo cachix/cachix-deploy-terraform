@@ -20,7 +20,7 @@ nix-env --install --attr cachix --file https://cachix.org/api/v1/install
 
 # TODO: Remove once switched to release
 # Set up binary cache for development versions of cachix
-cachix --host $host use $binary_cache --mode root-nixconf
+cachix --host $host use $binary_cache --mode user-nixconf
 
 export $(cat /etc/cachix-agent.token)
 
