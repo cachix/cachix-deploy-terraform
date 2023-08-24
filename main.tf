@@ -26,6 +26,11 @@ variable "cachix_host" {
   default     = "https://cachix.org"
 }
 
+variable "binary_cache_name" {
+  type        = string
+  description = "The name of the binary cache to use"
+}
+
 variable "ssh_private_key" {
   type        = string
   description = "Content of the private key used to connect to the target_host"
@@ -67,7 +72,7 @@ resource "null_resource" "cachix_deploy" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/bootstrap-agent.sh",
-      "/tmp/bootstrap-agent.sh ${var.cachix_host} ${var.agent_name} ${var.agent_profile}"
+      "/tmp/bootstrap-agent.sh ${var.cachix_host} ${var.binary_cache_name} ${var.agent_name} ${var.agent_profile}"
     ]
   }
 }
