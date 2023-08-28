@@ -2,11 +2,10 @@ provider "aws" {
   region = "eu-west-1"
 }
 
-# TODO: which AMI repo is maintained?
-# module "nixos_image" {
-#   source  = "git::https://github.com/numtide/terraform-nixos-amis.git?ref=645471853e0a9083865b0da2e341f133bf26a5f2"
-#   release = "latest"
-# }
+module "nixos_image" {
+  source  = "git::https://github.com/numtide/terraform-nixos-amis.git"
+  release = "latest"
+}
 
 resource "aws_security_group" "ssh_and_egress" {
   ingress {
@@ -44,8 +43,7 @@ resource "aws_key_pair" "generated_key" {
 }
 
 resource "aws_instance" "machine" {
-  # ami                  = module.nixos_image.id
-  ami                    = "ami-00badba5cfa0a0c0d"
+  ami                    = module.nixos_image.id
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.ssh_and_egress.id]
   key_name               = aws_key_pair.generated_key.key_name
