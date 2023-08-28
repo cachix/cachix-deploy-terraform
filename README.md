@@ -22,7 +22,7 @@ You'll need:
 module "cachix_deploy" {
   source            = "github.com/sandydoo/cachix-deploy-terraform"
   target_host       = aws_instance.machine.public_ip
-  binary_cache_name = "mycache"
+  cache_name        = "mycache"
   agent_name        = "cachix-terraform"
   agent_token       = "cachix-agent.token"
   ssh_private_key   = tls_private_key.state_ssh_key.private_key_openssh
@@ -38,7 +38,7 @@ Full examples for various providers:
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | target\_host | The host address of the target machine to deploy to | `string` | n/a | yes |
-| binary\_cache\_name | The name of the binary cache to substitute from | `string` | n/a | yes |
+| cache\_name | The name of the binary cache to substitute from | `string` | n/a | yes |
 | agent\_name | The name of the agent to deploy | `string` | n/a | yes |
 | agent\_token | The agent authentication token | `string` | n/a | yes |
 | agent\_profile | The name the profile for the agent to manage. Defaults to `system`. | `string` | `""` | no |

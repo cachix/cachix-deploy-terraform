@@ -57,7 +57,7 @@ resource "aws_instance" "machine" {
 module "cachix_deploy" {
   source            = "../"
   target_host       = aws_instance.machine.public_ip
-  binary_cache_name = "mycache"
+  cache_name        = "mycache"
   agent_name        = "cachix-terraform"
   agent_token       = file("stagix-agent.token")
   ssh_private_key   = tls_private_key.state_ssh_key.private_key_openssh
