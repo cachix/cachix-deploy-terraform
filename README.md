@@ -3,11 +3,13 @@ A Terraform module for adopting NixOS machines into Cachix Deploy.
 > Cachix Deploy is a continuous deployment service for Nix profiles.
 > Learn more at https://docs.cachix.org/deploy/
 
-This module is provider-agnostic. It uses `remote-exec` to bootstrap the Cachix Deploy agent on the target host over SSH. This is considered a [last resort approach in Terraform](https://www.terraform.io/language/resources/provisioners/syntax#provisioners-are-a-last-resort), which is why we strongly recommend using our Cachix Deploy images when possible:
+This module is provider-agnostic. It uses `remote-exec` to bootstrap the Cachix Deploy agent on the target host over SSH. 
 
-| Provider | Images | Tutorial |
-|----------|--------|----------|
-| Amazon Web Services (AWS) | [cachix/cachix-deploy-amis](https://github.com/cachix/cachix-deploy-amis/) | [cachix/cachix-deploy-aws](https://github.com/cachix/cachix-deploy-aws/) |
+<!-- This is considered a [last resort approach in Terraform](https://www.terraform.io/language/resources/provisioners/syntax#provisioners-are-a-last-resort), which is why we strongly recommend using our Cachix Deploy images when possible: -->
+
+<!-- | Provider | Images | Tutorial | -->
+<!-- |----------|--------|----------| -->
+<!-- | Amazon Web Services (AWS) | [cachix/cachix-deploy-amis](https://github.com/cachix/cachix-deploy-amis/) | [cachix/cachix-deploy-aws](https://github.com/cachix/cachix-deploy-aws/) | -->
 
 ## Requirements
 
@@ -20,7 +22,7 @@ You'll need:
 
 ```terraform
 module "cachix_deploy" {
-  source            = "github.com/sandydoo/cachix-deploy-terraform"
+  source            = "github.com/cachix/cachix-deploy-terraform"
   target_host       = aws_instance.machine.public_ip
   cache_name        = "mycache"
   agent_name        = "cachix-terraform"
